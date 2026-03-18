@@ -71,9 +71,9 @@ class Strings {
 
     @Sample
     fun chunkedSequence() {
-        val dnaFragment = "ATTCGCGGCCGCCAA"
-
-        val codons = dnaFragment.chunkedSequence(3)
+        val dnaFragment = "ATTCGCCAAXXX"
+        val knownAcids = setOf("ATT", "CGC", "CAA") // XXX would cause error if processed
+        val codons = dnaFragment.chunkedSequence(3).onEach { check(it in knownAcids) }
         val firstTwo = codons.take(2).toList()
 
         assertPrints(firstTwo, "[ATT, CGC]")
